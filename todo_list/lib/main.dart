@@ -30,8 +30,6 @@ class TodoListState extends State<TodoList> {
     }
   }
 
-
-
   Widget _buildTodoList() {
     return new ListView.builder(
       itemBuilder: (context, index) {
