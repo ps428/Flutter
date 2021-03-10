@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';//for toast
+
 void main() => runApp(MaterialApp(
   debugShowCheckedModeBanner: false,
   home: Home(),
@@ -13,12 +12,12 @@ class Home extends StatelessWidget {
       backgroundColor: Colors.white24,
       appBar: AppBar(
         title: Text(
-            "Basic App",
+          "Beat Boxer",
           style: TextStyle(
-            color: Colors.black,
-            fontFamily: 'Caveat',
-            fontSize: 30,
-            fontWeight: FontWeight.bold
+              color: Colors.black,
+              fontFamily: 'Caveat',
+              fontSize: 30,
+              fontWeight: FontWeight.bold
           ),
         ),
         centerTitle: true,
@@ -51,7 +50,7 @@ class Home extends StatelessWidget {
           //got some error previously... try to re-run the app instead of hot restart
           //just like for fonts make a dir and add those images there and then add the permission in the pubspec.yaml file
           image: AssetImage('assets/image1.jpg'),
-          
+
           //see more simple way below
         ),*//*
 
@@ -158,7 +157,7 @@ class Home extends StatelessWidget {
       ),*/
 
       //padding only..no container
-     /* body: Padding(//can't apply colour and margin to a padding widget
+      /* body: Padding(//can't apply colour and margin to a padding widget
         padding: EdgeInsets.all(20),
         child: Text(
           'Hakunana Matata',
@@ -209,7 +208,7 @@ class Home extends StatelessWidget {
       ]
       ),
 */
-     /* body: Column(//exact same thing as above
+      /* body: Column(//exact same thing as above
         //IMPORTANT: WE CAN HAVE ROW INSIDE A COLUMNS AND VICE VERSA
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -308,3 +307,4 @@ class Home extends StatelessWidget {
     );
   }
 }
+
