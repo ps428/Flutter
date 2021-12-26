@@ -9,10 +9,10 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {//returning a container widget earlier...now cut paste code from above and returnscaffold
     return Scaffold(
-      backgroundColor: Colors.white24,
+      backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         title: Text(
-          "Beat Boxer",
+          "Drummer",
           style: TextStyle(
               color: Colors.black,
               fontFamily: 'Caveat',
@@ -247,36 +247,16 @@ class Home extends StatelessWidget {
 */
       //video 13 is about shortcuts and benefits of yellow balloon
       //video 14 about exapanded widgets...taking up all space
-      body: Row(
+      body: Column(
         //IMPORTANT: WE CAN HAVE ROW INSIDE A COLUMNS AND VICE VERSA
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center, //Center Column contents horizontally,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
           children: <Widget>[
+
+
             Expanded(
-              flex: 3,//ratio allotated to this one
-              child: Text(
-                "Ni hao",
-                style: TextStyle(
-                    color: Colors.amberAccent,
-                    fontSize: 15,
-                    fontFamily: 'Caveat'
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 4,
-              child: RaisedButton(
-                onPressed:  () {},
-                color: Colors.amberAccent,
-                child: Icon(
-                  Icons.whatshot,
-                  color: Colors.blue,
-                  size: 50,
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 3,
+              flex: 1,
               child: Container(
                   color: Colors.white12,
                   padding: EdgeInsets.all(12),
@@ -295,15 +275,23 @@ class Home extends StatelessWidget {
             Expanded(
                 flex: 5,
                 child: Image.asset('assets/image1.jpg')
+            ),
+            Expanded(
+              flex: 2,
+              child: RaisedButton(
+                onPressed:  () {},
+                color: Colors.amberAccent,
+                child: Icon(
+                  Icons.whatshot,
+                  color: Colors.blue,
+                  size: 50,
+                ),
+              ),
             )
           ]
       ),
 
-      floatingActionButton: FloatingActionButton(
-        child: Text("Click"),
-        foregroundColor: Colors.black,
-        backgroundColor: Colors.amberAccent,//setting bg colour
-      ),
+
     );
   }
 }
