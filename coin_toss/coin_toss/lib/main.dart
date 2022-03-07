@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -16,15 +17,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Coin Toss',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Check your luck'),
@@ -35,15 +27,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -51,79 +34,76 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _results = "Flip Now";
+  String _latest_results = "Flip Now";
+  String _results = "";
   int _counter = 0;
   int _heads = 0;
   int _tails = 0;
+  final _simulations = TextEditingController();
+
+  @override
+  void initState() {
+    _simulations.text = "0";
+    super.initState();
+  }
+
   void _toss() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       Random random = Random();
       if (random.nextInt(100) > 50) {
-        _results = "Heads";
+        _latest_results = "Heads";
         _heads++;
       } else {
-        _results = "Tails";
+        _latest_results = "Tails";
         _tails++;
       }
       _counter++;
     });
   }
 
+  void _simulateToses(int n) {
+    setState(() {
+      while (n != 0) {
+        Random random = Random();
+        if (random.nextInt(100) > 50) {
+          _latest_results = "Heads";
+          _heads++;
+        } else {
+          _latest_results = "Tails";
+          _tails++;
+        }
+        _counter++;
+        n--;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
               'The result is:',
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             Text(
-              _results,
+              _latest_results,
               style: Theme.of(context).textTheme.headline4,
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             Text('Toses so far: $_counter'),
             const SizedBox(
-              height: 10,
+              height: 5,
             ),
             Row(
               mainAxisAlignment:
@@ -138,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             const SizedBox(
-              height: 10,
+              height: 5,
             ),
             Row(
               mainAxisAlignment:
@@ -146,21 +126,60 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Text('$_heads'),
                 const SizedBox(
-                  width: 50,
+                  width: 70,
                 ),
                 Text('$_tails')
               ],
-            )
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            SizedBox(
+              width: 150.0,
+              child: TextField(
+                  autofocus: true,
+                  controller: _simulations,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Auto Simulations',
+                    hintText: "0",
+                    isDense: true,
+                  )),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment:
+                  MainAxisAlignment.center, //Center Row contents horizontally,
+              children: [
+                FloatingActionButton(
+                    tooltip: "Auto Simulate",
+                    child: const Icon(Icons.autorenew_rounded),
+                    onPressed: () =>
+                        {_simulateToses(int.parse(_simulations.text))}),
+                const SizedBox(
+                  width: 70,
+                ),
+                FloatingActionButton(
+                  onPressed: _toss,
+                  tooltip: 'Flip Coin Once',
+                  child: const Icon(Icons
+                      .rotate_left_rounded), // This trailing comma makes auto-formatting nicer for build methods.
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            _heads > _tails
+                ? const Text("Winner is Heads!")
+                : _tails > _heads
+                    ? const Text("Winner is Tails!")
+                    : const Text("Its a draw!")
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _toss,
-        tooltip: 'Flip Coin',
-        child: const Icon(Icons
-            .rotate_left_rounded), // This trailing comma makes auto-formatting nicer for build methods.
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
