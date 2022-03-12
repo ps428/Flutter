@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _toss() {
     setState(() {
       Random random = Random();
-      if (random.nextInt(100) > 50) {
+      if (random.nextInt(100) >= 50) {
         _latest_results = "Heads";
         _heads++;
       } else {
@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       while (n != 0) {
         Random random = Random();
-        if (random.nextInt(100) > 50) {
+        if (random.nextInt(100) >= 50) {
           _latest_results = "Heads";
           _heads++;
         } else {
@@ -175,7 +175,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 ? const Text("Winner is Heads!")
                 : _tails > _heads
                     ? const Text("Winner is Tails!")
-                    : const Text("Its a draw!")
+                    : const Text("Its a draw!"),
+            const SizedBox(
+              height: 25,
+            ),
+            ElevatedButton(
+              onPressed: () => {
+                setState(() {
+                  _counter = 0;
+                  _heads = 0;
+                  _tails = 0;
+                  _latest_results = "Flip Now";
+                })
+              },
+              child: const Text('Reset'),
+            )
           ],
         ),
       ),
